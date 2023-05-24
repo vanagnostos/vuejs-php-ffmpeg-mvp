@@ -13,8 +13,8 @@ There are some [tests](backend/test/Unit) implemented but a real project should 
 
 The backend API is able to consume directly raw files and convert them on the fly but is currently configured to use processed data (this can be easily changed in [WaveformResourceFactory](backend/src/Api/Resource/Waveform/WaveformResourceFactory.php)). 
 
-Data preprocessing is implemented as a simple [cron script](backend/cron/consumer.php). In real life it may require different implementation. For example, it would perhaps receive the new raw data from 
-external service (messaging?). It also could be distributed on many servers, depending on the required capacity, load, etc. There are some related notes in the file too.
+Data preprocessing is implemented as a simple [cron script](backend/cron/consumer.php) (there are some related notes in the file too). In real life it may require different implementation. For example, it would perhaps receive the new raw data from 
+external service (messaging?). It also could be distributed on many servers, depending on the required capacity, load, etc.
 
 ### (Invalid) raw data handling
 
