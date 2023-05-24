@@ -12,10 +12,16 @@ class Channel implements ChannelInterface
 
     private float $talkDuration = 0;
 
+    private float $totalDuration = 0;
+
     public function __construct(ChannelDataInterface $dataSource)
     {
         $dataPoints = $dataSource->getDataPoints();
         $dataPointsCount = count($dataPoints);
+
+        if ($dataPointsCount) {
+            $this->totalDuration = $dataPoints[$dataPointsCount - 1];
+        }
 
         for ($i = 0; $i < $dataPointsCount; $i += 2) {
             if (!isset($dataPoints[$i + 1])) {
@@ -43,11 +49,7 @@ class Channel implements ChannelInterface
 
     public function getTotalDuration(): float
     {
-        if (!$this->waveform) {
-            return 0;
-        }
-
-        return $this->waveform[count($this->waveform) - 1][1];
+        return $this->totalDuration;
     }
 
     public function getWaveform(): array
