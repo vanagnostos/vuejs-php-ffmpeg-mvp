@@ -1,5 +1,5 @@
 <p align="center">
-
+<img width="1691" alt="image" src="https://github.com/vanagnostos/vuejs-php-ffmpeg-mvp/assets/16326125/36d73c27-ca99-4488-91e8-5be3180aa5e4">
 </p>
 
 ### Assumptions
