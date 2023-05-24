@@ -11,7 +11,7 @@ use Api\Resource\ResourceInterface;
 use Api\Response\ResponseCode;
 use Ffmpeg\Channel;
 use Ffmpeg\Conversation;
-use Ffmpeg\Loader\StringDataLoader;
+use Ffmpeg\Loader\PhpArrayDataLoader;
 
 class WaveformResourceFactory implements ResourceFactoryInterface
 {
@@ -22,15 +22,20 @@ class WaveformResourceFactory implements ResourceFactoryInterface
         }
 
         $id = $routeMatch[count($routeMatch) - 1];
-        $userFile = $config['dataPath'] . '/' . $id . '/user-channel.txt';
-        $customerFile = $config['dataPath'] . '/' . $id . '/customer-channel.txt';
+        $userFile = $config['parsedDataPath'] . '/' . $id . '/user-channel.txt';
+        $customerFile = $config['parsedDataPath'] . '/' . $id . '/customer-channel.txt';
 
         if (!file_exists($customerFile) || !file_exists($userFile)) {
             throw new ApiProblem(sprintf('Invalid conversation ID "%d"', $id), ResponseCode::NOT_FOUND);
         }
 
+        /* Consume raw files directly (also change to rawDataPath above)
         $userChannel = new Channel((new StringDataLoader())->loadFromFile($userFile));
         $customerChannel = new Channel((new StringDataLoader())->loadFromFile($customerFile));
+        */
+
+        $userChannel = new Channel((new PhpArrayDataLoader())->loadFromFile($userFile));
+        $customerChannel = new Channel((new PhpArrayDataLoader())->loadFromFile($customerFile));
 
         return new WaveformResource(
             new Conversation($userChannel, $customerChannel),

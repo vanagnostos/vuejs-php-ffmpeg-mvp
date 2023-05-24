@@ -12,5 +12,10 @@ return [
         Api\Resource\Waveform\WaveformResource::class =>
             Api\Resource\Waveform\WaveformResourceFactory::class
     ],
-    'dataPath' => 'data'
+    'corrections' => [
+        'correctTimingErrors' => true,
+        'timingErrorsCorrectionValue' => 0.001
+    ],
+    'rawDataPath' => 'data/raw',
+    'parsedDataPath' => 'data/parsed'
 ];

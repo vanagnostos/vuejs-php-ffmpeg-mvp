@@ -12,6 +12,17 @@ class StringDataLoader extends AbstractStringDataLoader
 
     private float $timingErrorsCorrectionValue = 0.001;
 
+    public function __construct(array $config = [])
+    {
+        if (array_key_exists('correctTimingErrors', $config)) {
+            $this->correctTimingErrors = (bool)$config['correctTimingErrors'];
+        }
+
+        if (array_key_exists('timingErrorsCorrectionValue', $config)) {
+            $this->timingErrorsCorrectionValue = (float)$config['timingErrorsCorrectionValue'];
+        }
+    }
+
     protected function parseData(array $fileData): void
     {
         $patterns = [
