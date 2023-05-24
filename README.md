@@ -9,20 +9,20 @@ could be done by using 3rd party libraries and/or framework.
 
 The project scope does not include features like authentication, logging, cache, rate limiting.  
 
-There are some tests implemented but a real project should aim for much bigger coverage. Acceptance/functional tests would be useful as well.
+There are some [tests](backend/test/Unit) implemented but a real project should aim for much bigger coverage. Acceptance/functional tests would be useful as well.
 
-The backend API is able to consume directly raw files and convert them on the fly but is currently configured to use processed data (this can be easily changed in WaveformResourceFactory). 
+The backend API is able to consume directly raw files and convert them on the fly but is currently configured to use processed data (this can be easily changed in [WaveformResourceFactory](backend/src/Api/Resource/Waveform/WaveformResourceFactory.php)). 
 
-Data preprocessing is implemented as a simple cron script. In real life it may require different implementation. For example, it would perhaps receive the new raw data from 
+Data preprocessing is implemented as a simple [cron script](backend/cron/consumer.php). In real life it may require different implementation. For example, it would perhaps receive the new raw data from 
 external service (messaging?). It also could be distributed on many servers, depending on the required capacity, load, etc.
 
 ### (Invalid) raw data handling
 
-There are three easily configurable options available for raw data handling. 
+There are three easily configurable options available for raw [data handling](backend/src/Ffmpeg/Loader). 
 
 First one assumes valid input files and does very basic checks. 
 
-Second and third one do more advanced checks (whether silence_(start|end) alternate in the expected order) and are able to correct some errors by ignoring invalid 
+Second and third one do more advanced checks (like whether silence_(start|end) alternate in the expected order) and are able to correct some errors by ignoring invalid 
 lines and/or by correcting timing errors. 
 
 In a real project, large number of test input files would be required to evaluate as many as possible data issues that may exist. Also, the exact error handling strategy 
