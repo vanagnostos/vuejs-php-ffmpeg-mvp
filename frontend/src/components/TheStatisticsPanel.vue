@@ -2,13 +2,13 @@
   <div class="panel">
     <h4>Statistics</h4>
     <ul>
-      <li :class="{ good: userTalkColor }">
+      <li :class="userTalkColor">
         <span>User Talk Percentage:</span><span>{{ userTalkPercentage }}</span>
       </li>
-      <li :class="{ good: userUserMonologueColor }">
+      <li :class="userUserMonologueColor">
         <span>Longest User Monologue:</span><span>{{ longestUserMonologue }}</span>
       </li>
-      <li :class="{ good: customerMonologueColor }">
+      <li :class="customerMonologueColor">
         <span>Longest Customer Monologue:</span><span>{{ longestCustomerMonologue }}</span>
       </li>
     </ul>
@@ -37,13 +37,13 @@ export default {
       return this.formatValue(this.data.longest_customer_monologue, 's');
     },
     userTalkColor() {
-      return this.data.user_talk_percentage > 50;
+      return this.data.user_talk_percentage > 50 ? 'good' : 'bad';
     },
     customerMonologueColor() {
-      return this.data.longest_customer_monologue > 60;
+      return this.data.longest_customer_monologue > 60 ? 'good' : 'bad';
     },
     userUserMonologueColor() {
-      return this.data.longest_user_monologue < 60;
+      return this.data.longest_user_monologue < 60 ? 'good' : 'bad';
     }
   },
   methods: {
@@ -68,7 +68,6 @@ ul{
 
 li {
   display: flex;
-  color: #ff5800;
   list-style-type: none;
   margin-bottom: 10px;
   padding: 10px;
@@ -82,6 +81,10 @@ li:last-child{
 
 li.good {
   color: #008c57;
+}
+
+li.bad {
+  color: #ff5800;
 }
 
 li span{

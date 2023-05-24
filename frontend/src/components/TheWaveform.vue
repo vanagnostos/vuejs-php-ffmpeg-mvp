@@ -2,14 +2,15 @@
   <div>
     <h4>{{ label }}</h4>
     <div class="bar">
-      <template v-for="(item) in chunks()">
-        <span :style="{width: item.width + '%', backgroundColor: item.talk ? color : ''}"></span>
+      <template v-for="(item) in chunks">
+        <span :style="{width: item.width + '%'}" :class="{talk: item.talk}"></span>
       </template>
     </div>
   </div>
 </template>
 
 <script setup>
+//, backgroundColor: item.talk ? color : ''
 defineProps({
   data: {
     type: Array,
@@ -28,7 +29,7 @@ defineProps({
 
 <script>
 export default {
-  methods: {
+  computed: {
     chunks() {
       if (!this.data.length) {
         return [];
@@ -73,7 +74,10 @@ h4 {
 }
 
 .bar span {
-  width: 100%;
   height: 100%;
+}
+
+.bar .talk{
+  background-color: v-bind(color);
 }
 </style>
