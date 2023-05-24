@@ -22,8 +22,8 @@ There are three easily configurable options available for raw data handling.
 
 First one assumes valid input files and does very basic checks. 
 
-Second one does more advanced checks (whether silence_(start|end) alternate in the expected order) and is able to correct some timing errors (by ignoring invalid lines or by correcting 
-them).
+Second and third one do more advanced checks (whether silence_(start|end) alternate in the expected order) and are able to correct some errors by ignoring invalid 
+lines and/or by correcting timing errors. 
 
 In a real project, large number of test input files would be required to evaluate as many as possible data issues that may exist. Also, the exact error handling strategy 
 should depend on the business requirements and should be a team decision (product owner, business analysts, developers...).   
