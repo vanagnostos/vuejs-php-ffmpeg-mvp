@@ -2,11 +2,31 @@
 
 </p>
 
-This project is a simple PHP/Vuejs application that ...
+### Assumptions
 
-This is only a test project, so it does not use any external PHP libraries. In a real application, some parts (such as request/response handling, routing, DI, etc) could be done by using 3rd party libraries and/or framework.
+This is only a test project, so it does not use any external PHP libraries. In a real application, some parts (such as request/response handling, routing, DI, etc) 
+could be done by using 3rd party libraries and/or framework.
 
-The project scope does not include features like authentication, logging, cache, rate limiting, etc.  
+The project scope does not include features like authentication, logging, cache, rate limiting.  
+
+There are some tests implemented but a real project should aim for much bigger coverage. Acceptance/functional tests would be useful as well.
+
+The backend API is able to consume directly raw files and convert them on the fly but is currently configured to use processed data (this can be easily changed in WaveformResourceFactory). 
+
+Data preprocessing is implemented as a simple cron script. In real life it may require different implementation. For example, it would perhaps receive the new raw data from 
+external service (messaging?). It also could be distributed on many servers, depending on the required capacity, load, etc.
+
+### (Invalid) raw data handling
+
+There are three easily configurable options available for raw data handling. 
+
+First one assumes valid input files and does very basic checks. 
+
+Second one does more advanced checks (whether silence_(start|end) alternate in the expected order) and is able to correct some timing errors (by ignoring invalid lines or by correcting 
+them).
+
+In a real project, large number of test input files would be required to evaluate as many as possible data issues that may exist. Also, the exact error handling strategy 
+should depend on the business requirements and should be a team decision (product owner, business analysts, developers...).   
 
 ### Backend 
 
@@ -15,6 +35,12 @@ The project scope does not include features like authentication, logging, cache,
  - run "composer install"
  - run "composer serve" to test it using PHP's built-in server
  - run "composer unit-test" to execute the unit tests
+
+### Data preprocessing
+
+ - raw data is stored in backend/data/raw/[conversation id]
+ - parsed data is stored in backend/data/parsed/[conversation id]
+ - to convert raw files into processed data, cd to ./backend directory and run "php -f cron/consumer.php"
 
 ### Frontend
 
