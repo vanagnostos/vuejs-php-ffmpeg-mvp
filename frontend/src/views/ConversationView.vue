@@ -1,7 +1,7 @@
 <template>
   <main>
-    <TheWaveformPanel :data="waveformData" v-show="!busy && !error"/>
-    <TheStatisticsPanel :data="statisticsData" v-show="!busy && !error"/>
+    <TheWaveformPanel :data="waveformData" v-show="valid"/>
+    <TheStatisticsPanel :data="statisticsData" v-show="valid"/>
     <Preloader v-show="busy && !error"/>
     <div class="error" v-if="error">{{ error }}</div>
   </main>
@@ -25,11 +25,19 @@ export default {
       longest_customer_monologue: 0
     }
   }),
+  watch:{
+    $route: {
+      handler (to, from){
+        this.fetchData()
+      },
+      immediate: true
+    }
+  },
   created() {
     this.$watch(
         () => this.$route.params,
         () => {
-          this.fetchData()
+          //this.fetchData()
         },
         {
           immediate: true
@@ -37,6 +45,9 @@ export default {
     )
   },
   computed: {
+    valid(){
+      return !this.busy && !this.error;
+    },
     statisticsData() {
       return {
         user_talk_percentage: this.data.user_talk_percentage,
@@ -60,7 +71,7 @@ export default {
       this.resetState();
       this.error = message;
     },
-    async fetchData() {
+    fetchData() {
       const url     = import.meta.env.VITE_API_BASE_URL + '/v1/waveform/' + this.$route.params.id,
             options = {
               headers: {

@@ -38,19 +38,34 @@ export default {
             chunks = [];
       for (let i = 0; i < this.data.length; i++) {
         let chunk = this.data[i];
-        chunks.push({
-          width: (100 * (chunk[1] - chunk[0]) / total).toFixed(2),
-          talk: true
-        });
+        chunks.push(
+            this.chunk(
+                this.width(chunk[0], chunk[1], total),
+                true
+            )
+        );
         if (this.data[i + 1]) {
           let nextChunk = this.data[i + 1];
-          chunks.push({
-            width: (100 * (nextChunk[0] - chunk[1]) / total).toFixed(2),
-            talk: false
-          });
+          chunks.push(
+              this.chunk(
+                  this.width(chunk[1], nextChunk[0], total),
+                  false
+              )
+          );
         }
       }
       return chunks;
+    }
+  },
+  methods: {
+    chunk(width, talk){
+      return {
+        width: width.toFixed(2),
+        talk: talk
+      };
+    },
+    width(start, stop, total){
+      return (100 * (stop - start) / total);
     }
   }
 }
